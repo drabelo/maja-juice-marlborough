@@ -18,7 +18,7 @@
       --cream:   #FAF7F2;
       --cream2:  #F2EDE4;
       --charcoal:#1A1A1A;
-      --muted:   #6B7280;
+      --muted:   #4E5764;
       --white:   #FFFFFF;
       --radius:  16px;
       --radius-lg: 24px;
@@ -100,14 +100,17 @@
       font-family: 'Playfair Display', serif;
       font-size: 1.5rem;
       font-weight: 900;
-      color: var(--green);
+      color: var(--white);
       text-decoration: none;
       display: flex;
       align-items: center;
       gap: 8px;
+      transition: color .3s;
     }
-    .nav-logo span { color: var(--orange); }
+    .nav-logo span { color: var(--yellow); transition: color .3s; }
     .nav-logo .leaf { font-size: 1.2rem; }
+    #nav.scrolled .nav-logo { color: var(--green); }
+    #nav.scrolled .nav-logo span { color: var(--orange); }
     .nav-links {
       display: flex;
       align-items: center;
@@ -118,10 +121,12 @@
       text-decoration: none;
       font-weight: 500;
       font-size: .9rem;
-      color: var(--charcoal);
+      color: rgba(255,255,255,.92);
       transition: color .2s;
     }
-    .nav-links a:hover { color: var(--orange); }
+    #nav.scrolled .nav-links a { color: var(--charcoal); }
+    .nav-links a:hover { color: var(--yellow); }
+    #nav.scrolled .nav-links a:hover { color: var(--orange); }
     .nav-cta { font-size: .85rem !important; padding: 10px 22px !important; }
 
     /* ── HERO ── */
@@ -189,7 +194,7 @@
     .hero-title em { color: var(--yellow); font-style: italic; }
     .hero-sub {
       font-size: clamp(1rem, 2vw, 1.2rem);
-      color: rgba(255,255,255,.75);
+      color: rgba(255,255,255,.90);
       max-width: 500px;
       margin: 0 auto 40px;
       line-height: 1.7;
@@ -218,7 +223,7 @@
       color: var(--yellow);
       display: block;
     }
-    .hero-stat-label { font-size: .8rem; color: rgba(255,255,255,.6); text-transform: uppercase; letter-spacing: .08em; }
+    .hero-stat-label { font-size: .8rem; color: rgba(255,255,255,.78); text-transform: uppercase; letter-spacing: .08em; }
     .hero-scroll {
       position: absolute;
       bottom: 32px; left: 50%;
@@ -420,7 +425,7 @@
       color: var(--white);
       margin-bottom: 8px;
     }
-    .menu-card-desc { font-size: .83rem; color: rgba(255,255,255,.55); line-height: 1.6; margin-bottom: 20px; }
+    .menu-card-desc { font-size: .83rem; color: rgba(255,255,255,.82); line-height: 1.6; margin-bottom: 20px; }
     .menu-card-footer { display: flex; justify-content: space-between; align-items: center; }
     .menu-card-price {
       font-family: 'DM Mono', monospace;
@@ -435,8 +440,8 @@
       letter-spacing: .1em;
       padding: 4px 10px;
       border-radius: 100px;
-      background: rgba(255,255,255,.08);
-      color: rgba(255,255,255,.5);
+      background: rgba(255,255,255,.12);
+      color: rgba(255,255,255,.72);
     }
     .menu-card.hidden { display: none; }
 
@@ -552,12 +557,12 @@
       display: block;
     }
     .footer-logo span { color: var(--orange); }
-    .footer-tagline { font-size: .9rem; line-height: 1.6; }
+    .footer-tagline { font-size: .9rem; line-height: 1.6; color: rgba(255,255,255,.68); }
     .footer-nav { display: flex; gap: 64px; flex-wrap: wrap; }
     .footer-nav-group h4 { color: var(--white); font-size: .8rem; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 16px; }
     .footer-nav-group ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
     .footer-nav-group a {
-      color: rgba(255,255,255,.45);
+      color: rgba(255,255,255,.62);
       text-decoration: none;
       font-size: .88rem;
       transition: color .2s;
@@ -969,6 +974,8 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
     }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
     reveals.forEach(el => observer.observe(el));
+    // Safety fallback: ensure nothing stays invisible after load
+    setTimeout(() => reveals.forEach(el => el.classList.add('visible')), 1200);
 
     // Menu filter
     const filterBtns = document.querySelectorAll('.filter-btn');
